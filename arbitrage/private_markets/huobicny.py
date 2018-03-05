@@ -18,6 +18,7 @@ import traceback
 import config
 import logging
 
+
 class PrivateHuobiCNY(Market):
     def __init__(self,HUOBI_API_KEY=None, HUOBI_SECRET_TOKEN=None):
         super().__init__()
@@ -50,7 +51,6 @@ class PrivateHuobiCNY(Market):
             return response
 
         return response['id']
-
 
     def _get_order(self, order_id):
         response = self.market.orderInfo(order_id)

@@ -4,11 +4,12 @@ import time
 from .observer import Observer
 from .emailer import send_email
 from fiatconverter import FiatConverter
-from private_markets import huobicny,okcoincny,brokercny
+from private_markets import huobicny  # ,okcoincny,brokercny
 import os, time
 import sys
 import traceback
 from .basicbot import BasicBot
+
 
 class TraderBot(BasicBot):
     def __init__(self):
@@ -16,9 +17,9 @@ class TraderBot(BasicBot):
 
         self.clients = {
             # "HaobtcCNY": haobtccny.PrivateHaobtcCNY(config.HAOBTC_API_KEY, config.HAOBTC_SECRET_TOKEN),
-            "OKCoinCNY": okcoincny.PrivateOkCoinCNY(config.OKCOIN_API_KEY, config.OKCOIN_SECRET_TOKEN),
+            # "OKCoinCNY": okcoincny.PrivateOkCoinCNY(config.OKCOIN_API_KEY, config.OKCOIN_SECRET_TOKEN),
             "HuobiCNY": huobicny.PrivateHuobiCNY(config.HUOBI_API_KEY, config.HUOBI_SECRET_TOKEN),
-            "BrokerCNY": brokercny.PrivateBrokerCNY(),
+            # "BrokerCNY": brokercny.PrivateBrokerCNY(),
         }
 
         self.reverse_profit_thresh = config.reverse_profit_thresh

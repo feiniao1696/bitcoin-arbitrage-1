@@ -11,6 +11,7 @@ import traceback
 
 client = None 
 
+
 def init_broker():
   try:
     global client

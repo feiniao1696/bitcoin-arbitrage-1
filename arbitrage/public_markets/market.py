@@ -11,6 +11,7 @@ import traceback
 import config
 import threading
 
+
 class Market(object):
     def __init__(self, currency):
         self.name = self.__class__.__name__

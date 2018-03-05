@@ -32,7 +32,6 @@ class Arbitrer(object):
         self.init_observers(config.observers)
         self.threadpool = ThreadPoolExecutor(max_workers=10)
 
-
     def init_markets(self, _markets):
         logging.debug("_markets:%s" % _markets)
         self.market_names = _markets
@@ -71,6 +70,7 @@ class Arbitrer(object):
         signal.signal(signal.SIGTERM, sigint_handler)
 
         while True:
+            # {'asks': [{'price': 0, 'amount': 0}], 'bids': [{'price': 0, 'amount': 0}]}
             self.depths = self.update_depths()
             # print(self.depths)
             self.tickers()

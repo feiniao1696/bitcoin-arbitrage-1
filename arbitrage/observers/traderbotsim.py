@@ -68,14 +68,14 @@ class TraderBotSim(TraderBot):
         self.broker = MockMarket("broker", 0.000, 5000) # 0.0% fee
         self.reverse_profit_thresh = config.reverse_profit_thresh
         self.clients = {
-            "KrakenEUR": self.kraken,
-            "PaymiumEUR": self.paymium,
-            "BitstampUSD": self.bitstamp,
-            "BTCCCNY": self.btcc,
-            "HaobtcCNY": self.haobtc,
-            "OKCoinCNY": self.okcoin,
+            # "KrakenEUR": self.kraken,
+            # "PaymiumEUR": self.paymium,
+            # "BitstampUSD": self.bitstamp,
+            # "BTCCCNY": self.btcc,
+            # "HaobtcCNY": self.haobtc,
+            # "OKCoinCNY": self.okcoin,
             "HuobiCNY": self.huobi,
-            "BrokerCNY": self.broker,
+            # "BrokerCNY": self.broker,
         }
 
         self.profit_thresh = 0.1  # in CNY
@@ -103,4 +103,4 @@ if __name__ == "__main__":
     t = TraderBotSim()
     print("Total BTC: %f" % t.total_btc_balance())
     print("Total CNY: %f" % t.total_cny_balance())
-    print("Total USD: %f" % t.total_usd_balance())
+    # print("Total USD: %f" % t.total_usd_balance())

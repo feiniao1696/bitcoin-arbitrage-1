@@ -9,6 +9,7 @@ import sys
 import traceback
 import config
 
+
 class BasicBot(Observer):
     def __init__(self):
         super().__init__()
@@ -152,4 +153,4 @@ class BasicBot(Observer):
 
     def get_spread(self):
         return self.sellprice - self.buyprice
-        
+
