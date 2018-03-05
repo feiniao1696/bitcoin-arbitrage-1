@@ -50,19 +50,6 @@ class TraderBot(BasicBot):
         for kclient in self.clients:
             self.clients[kclient].get_info()
 
-    def end_opportunity_finder(self):
-        if not self.potential_trades:
-            return
-        self.potential_trades.sort(key=lambda x: x[0])
-        # Execute only the best (more profitable)
-        self.execute_trade(*self.potential_trades[0][1:])
-
-    def get_min_tradeable_volume(self, buyprice, cny_bal, btc_bal):
-        min1 = float(cny_bal) * (1. - config.balance_margin) / buyprice
-        min2 = float(btc_bal) * (1. - config.balance_margin)
-
-        return min(min1, min2)
-
     def check_order(self, depths):
         # update price
 
@@ -203,6 +190,19 @@ class TraderBot(BasicBot):
                                       weighted_buyprice, weighted_sellprice,
                                       buyprice, sellprice])
 
+    def get_min_tradeable_volume(self, buyprice, cny_bal, btc_bal):
+        min1 = float(cny_bal) * (1. - config.balance_margin) / buyprice
+        min2 = float(btc_bal) * (1. - config.balance_margin)
+
+        return min(min1, min2)
+
+    def end_opportunity_finder(self):
+        if not self.potential_trades:
+            return
+        self.potential_trades.sort(key=lambda x: x[0])
+        # Execute only the best (more profitable)
+        self.execute_trade(*self.potential_trades[0][1:])
+
     def execute_trade(self, volume, kask, kbid, weighted_buyprice,
                       weighted_sellprice, buyprice, sellprice):
         volume = float('%0.2f' % volume)
@@ -259,4 +259,3 @@ class TraderBot(BasicBot):
                     logging.warn("2nd buy @%s %f BTC failed" % (kbid, volume))
                     return
         return
-

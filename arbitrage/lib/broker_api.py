@@ -1,5 +1,5 @@
 import thriftpy
-broker_thrift = thriftpy.load("arbitrage/lib/broker.thrift", module_name="broker_thrift")
+broker_thrift = thriftpy.load("lib/broker.thrift", module_name="broker_thrift")
 
 from thriftpy.rpc import make_client
 from thriftpy.protocol.binary import TBinaryProtocolFactory
