@@ -3,8 +3,10 @@
 import logging
 from fiatconverter import FiatConverter
 
+
 class TradeException(Exception):
     pass
+
 
 class Market:
     def __init__(self):
@@ -34,7 +36,6 @@ class Market:
         else:
             return self._buy(amount, local_currency_price)
 
-
     def sell(self, amount, price, client_id=None):
         """Orders are always priced in CNY"""
         local_currency_price = self.fc.convert(price, "CNY", self.currency)
@@ -45,7 +46,6 @@ class Market:
         else:
             return self._sell(amount, local_currency_price)
 
-
     def buy_maker(self, amount, price):
         """Orders are always priced in CNY"""
 
@@ -55,7 +55,6 @@ class Market:
                      local_currency_price, self.currency, price, self.name))
 
         return self._buy_maker(amount, local_currency_price)
-
 
     def sell_maker(self, amount, price):
         """Orders are always priced in CNY"""
@@ -76,7 +75,6 @@ class Market:
     def cancel_all(self):
         return self._cancel_all()
 
-
     def _buy(self, amount, price):
         raise NotImplementedError("%s.buy(self, amount, price)" % self.name)
 
@@ -88,7 +86,6 @@ class Market:
 
     def _sell_maker(self, amount, price):
         raise NotImplementedError("%s.sell_maker(self, amount, price)" % self.name)
-
 
     def _get_order(self, order_id):
         raise NotImplementedError("%s.get_order(self, order_id)" % self.name)

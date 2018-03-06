@@ -76,8 +76,8 @@ class TraderBot(BasicBot):
                     self.remove_order(buy_order['id'])
                 else:
                     try:
-                        ask_price =  int(depths[buy_order['market']]["asks"][0]['price'])
-                    except  Exception as ex:
+                        ask_price = int(depths[buy_order['market']]["asks"][0]['price'])
+                    except Exception as ex:
                         logging.warn("exception depths:%s" % ex)
                         traceback.print_exc()
                         continue
@@ -110,7 +110,7 @@ class TraderBot(BasicBot):
                 else:
                     try:
                         bid_price = int(depths[sell_order['market']]["bids"][0]['price'])
-                    except  Exception as ex:
+                    except Exception as ex:
                         logging.warn("exception depths:%s" % ex)
                         traceback.print_exc()
                         continue
@@ -121,6 +121,7 @@ class TraderBot(BasicBot):
                         logging.info("Fire:cancel %s bid_price %s result['price'] = %s,left_amount=%s" % (sell_order['market'], bid_price, result['price'], left_amount))
                         self.cancel_order(sell_order['market'], 'sell', sell_order['id'])
 
+    # 预期收益，发送成交量，可卖最深档的价格（小于买一/i），便宜卖的交易所，可买最深档的价格（大于卖一/i），买的高交易所，高的比例，发送买价，发送卖价
     def opportunity(self, profit, volume, buyprice, kask, sellprice, kbid, perc,
                     weighted_buyprice, weighted_sellprice):
         if kask not in self.clients:
@@ -139,6 +140,8 @@ class TraderBot(BasicBot):
             return
 
         arbitrage_max_volume = config.max_tx_volume
+
+        # 预期最优利润小于1，不套利; 发送价格空间比例小于1%，不套利
         if profit < self.reverse_profit_thresh and perc < self.reverse_perc_thresh:
             logging.info("Profit or profit percentage(%0.4f/%0.4f) lower than thresholds(%s/%s)" 
                             % (profit, perc, self.reverse_profit_thresh, self.reverse_perc_thresh))
@@ -170,6 +173,7 @@ class TraderBot(BasicBot):
             logging.warn("Profit=%f seems malformed" % (perc, ))
             return
 
+        # 根据余额再计算发送交易量
         max_volume = self.get_min_tradeable_volume(buyprice,
                                                    self.clients[kask].cny_balance,
                                                    self.clients[kbid].btc_balance)
