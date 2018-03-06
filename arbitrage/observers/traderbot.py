@@ -41,10 +41,9 @@ class TraderBot(BasicBot):
 
     def begin_opportunity_finder(self, depths):
         self.potential_trades = []
-
         # Update client balance
         self.update_balance()
-
+        # 是否有买卖的单子
         self.check_order(depths)
 
     def update_balance(self):
@@ -54,7 +53,7 @@ class TraderBot(BasicBot):
     def check_order(self, depths):
         # update price
 
-        # query orders
+        # query orders 是否有在进行买卖操作
         if self.is_buying():
             buy_orders = self.get_orders('buy')
             buy_orders.sort(key=lambda x: x['price'], reverse=True)

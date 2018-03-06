@@ -73,7 +73,7 @@ class TraderBotSim(TraderBot):
             # "BitstampUSD": self.bitstamp,
             # "BTCCCNY": self.btcc,
             # "HaobtcCNY": self.haobtc,
-            # "OKCoinCNY": self.okcoin,
+            "OKCoinCNY": self.okcoin,
             "HuobiCNY": self.huobi,
             # "BrokerCNY": self.broker,
         }

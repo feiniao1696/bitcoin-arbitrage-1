@@ -116,7 +116,6 @@ class BasicBot(Observer):
             return order
 
         return None
-        
 
     def cancel_order(self, kexchange, type, order_id):
         result = self.clients[kexchange].cancel_order(order_id)
