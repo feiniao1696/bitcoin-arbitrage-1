@@ -4,7 +4,7 @@ import time
 from .observer import Observer
 from .emailer import send_email
 from fiatconverter import FiatConverter
-from private_markets import huobicny  # ,okcoincny,brokercny
+from private_markets import huobicny, okcoincny  # ,brokercny
 import os, time
 import sys
 import traceback
@@ -17,7 +17,7 @@ class TraderBot(BasicBot):
 
         self.clients = {
             # "HaobtcCNY": haobtccny.PrivateHaobtcCNY(config.HAOBTC_API_KEY, config.HAOBTC_SECRET_TOKEN),
-            # "OKCoinCNY": okcoincny.PrivateOkCoinCNY(config.OKCOIN_API_KEY, config.OKCOIN_SECRET_TOKEN),
+            "OKCoinCNY": okcoincny.PrivateOkCoinCNY(config.OKCOIN_API_KEY, config.OKCOIN_SECRET_TOKEN),
             "HuobiCNY": huobicny.PrivateHuobiCNY(config.HUOBI_API_KEY, config.HUOBI_SECRET_TOKEN),
             # "BrokerCNY": brokercny.PrivateBrokerCNY(),
         }
@@ -147,9 +147,12 @@ class TraderBot(BasicBot):
                             % (profit, perc, self.reverse_profit_thresh, self.reverse_perc_thresh))
             arbitrage_max_volume = config.reverse_max_tx_volume
 
-            if self.clients[kbid].btc_balance < self.stage0_percent*self.init_btc[kbid] or self.clients[kbid].cny_balance < self.stage0_percent*self.init_cny[kbid]:
+            if self.clients[kbid].btc_balance < self.stage0_percent*self.init_btc[kbid] or \
+                            self.clients[kbid].cny_balance < self.stage0_percent*self.init_cny[kbid]:
                 logging.info("Buy @%s/%0.2f and sell @%s/%0.2f %0.2f BTC" % (kask, buyprice, kbid, sellprice, volume))
-                logging.info("%s %s btc:%s < %s,cny:%s < %s,  reverse", self.stage0_percent, kbid, self.clients[kbid].btc_balance,  self.stage0_percent*self.init_btc[kbid], self.clients[kbid].cny_balance, self.stage0_percent*self.init_cny[kbid])
+                logging.info("%s %s btc:%s < %s,cny:%s < %s,  reverse", self.stage0_percent, kbid, self.clients[kbid].btc_balance,
+                             self.stage0_percent*self.init_btc[kbid], self.clients[kbid].cny_balance,
+                             self.stage0_percent*self.init_cny[kbid])
                 ktemp = kbid
                 kbid = kask
                 kask = ktemp

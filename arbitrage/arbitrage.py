@@ -207,3 +207,20 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+'''
+2018-03-07 01:00:34,554 [INFO] Buy @OKCoinCNY/10950.00 and sell @HuobiCNY/10951.04 0.04 BTC
+2018-03-07 01:00:34,554 [INFO] 0.1 HuobiCNY btc:10.0 < 50.0,cny:5000 < 10.0,  reverse
+2018-03-07 01:00:34,554 [WARNING] HuobiCNY cny is insufficent
+
+
+response = requests.get(url, postdata, headers=headers, timeout=5)
+        
+  File "/Users/liziheng/anaconda3/lib/python3.6/site-packages/requests/adapters.py", line 496, in send
+    raise ConnectTimeout(e, request=request)
+requests.exceptions.ConnectTimeout: HTTPSConnectionPool(host='api.huobi.pro', port=443): Max retries exceeded with url: /market/depth?symbol=btcusdt&type=step0 (Caused by ConnectTimeoutError(<urllib3.connection.VerifiedHTTPSConnection object at 0x110f74b38>, 'Connection to api.huobi.pro timed out. (connect timeout=5)'))
+    (self.host, self.timeout))
+urllib3.exceptions.ConnectTimeoutError: (<urllib3.connection.VerifiedHTTPSConnection object at 0x10e9b74a8>, 'Connection to api.huobi.pro timed out. (connect timeout=5)')
+
+'''

@@ -24,6 +24,7 @@ class MockMarket(object):
             except IOError:
                 pass
 
+    # 币仓再平衡
     def buy(self, volume, price):
         logging.info("execute buy %f BTC @ %f on %s" %
                      (volume, price, self.name))
@@ -66,7 +67,7 @@ class TraderBotSim(TraderBot):
         self.okcoin = MockMarket("okcoin", 0.000, 5000) # 0.0% fee
         self.huobi = MockMarket("huobi", 0.000, 5000) # 0.0% fee
         self.broker = MockMarket("broker", 0.000, 5000) # 0.0% fee
-        self.reverse_profit_thresh = config.reverse_profit_thresh
+
         self.clients = {
             # "KrakenEUR": self.kraken,
             # "PaymiumEUR": self.paymium,
@@ -78,11 +79,23 @@ class TraderBotSim(TraderBot):
             # "BrokerCNY": self.broker,
         }
 
-        self.profit_thresh = 0.1  # in CNY
-        self.perc_thresh = 0.01  # in %
-        self.trade_wait = 60
+        self.reverse_profit_thresh = 0.01  # 不可以触发
+        self.reverse_perc_thresh = 0.001  # 不可以触发
+        self.profit_thresh = 0.02  # in CNY 可以触发
+        self.perc_thresh = 0.002  # in %  可以触发
+        self.trade_wait = 10
         self.last_trade = 0
         self.orders = []
+
+        self.init_btc = {'OKCoinCNY':500, 'HuobiCNY':500}
+        self.init_cny = {'OKCoinCNY':100, 'HuobiCNY':100}
+
+        self.stage0_percent = config.stage0_percent
+        self.stage1_percent = config.stage1_percent
+        self.last_bid_price = 0
+        self.trend_up = True
+
+        self.hedger = 'BrokerCNY'
 
     def total_balance(self, price):
         market_balances = [i.balance_total(
