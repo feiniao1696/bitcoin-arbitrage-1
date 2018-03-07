@@ -133,11 +133,14 @@ class Arbitrer(object):
         # 发送买价 高于 发送卖价的比例
         perc2 = (weighted_sellprice-weighted_buyprice)/buyprice * 100
 
+        print("Buy: ", weighted_buyprice, "@", kask,
+              " Sell: ", weighted_sellprice, "@", kbid, " Volume: ", volume,
+              " Expected profit: ", profit, perc2)
+
         # -- call trader bot
         for observer in self.observers:
             # 预期收益，发送成交量，可卖最深档的价格（小于买一/i），便宜卖的交易所，可买最深档的价格（大于卖一/i），买的高交易所，高的比例，发送买价，发送卖价
             # 结合各自余额，更新发送成交量，生成自己的潜在trade，在end处执行交易
-            print(profit, perc2, " Volume: ", volume, " Buy: ", weighted_buyprice, "@", kask,  "Sell: ", weighted_sellprice, "@", kbid)
             observer.opportunity(
                 profit, volume, buyprice, kask, sellprice, kbid,
                 perc2, weighted_buyprice, weighted_sellprice)

@@ -92,6 +92,9 @@ class PrivateHuobiCNY(Market):
 
     def get_info(self):
         """Get balance"""
+        self.btc_balance = 100000000
+        self.cny_balance = 100000000
+
         try:
             response = self.market.accountInfo()
             if response and "code" in response:

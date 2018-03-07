@@ -87,7 +87,7 @@ class BasicBot(Observer):
                     order_id = self.clients[kexchange].sell_maker(amount, price)
             else:
                 if type == 'buy':
-                	order_id = self.clients[kexchange].buy(amount, price)
+                    order_id = self.clients[kexchange].buy(amount, price)  #go to market for trace, to exchange to trade
                 else:
                     order_id = self.clients[kexchange].sell(amount, price)
 

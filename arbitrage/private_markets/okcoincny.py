@@ -94,6 +94,8 @@ class PrivateOkCoinCNY(Market):
 
     def get_info(self):
         """Get balance"""
+        self.btc_balance = 100000000
+        self.cny_balance = 100000000
         response = self.market.accountInfo()
         if response:
             if "error_code" in response:

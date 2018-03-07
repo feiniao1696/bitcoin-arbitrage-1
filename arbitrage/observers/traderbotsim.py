@@ -79,16 +79,16 @@ class TraderBotSim(TraderBot):
             # "BrokerCNY": self.broker,
         }
 
-        self.reverse_profit_thresh = 0.01  # 不可以触发
-        self.reverse_perc_thresh = 0.001  # 不可以触发
+        self.reverse_profit_thresh = 0.01  # 利润太小不触发
+        self.reverse_perc_thresh = 0.001  # 利润比例太小以触发
         self.profit_thresh = 0.02  # in CNY 可以触发
         self.perc_thresh = 0.002  # in %  可以触发
         self.trade_wait = 10
         self.last_trade = 0
         self.orders = []
 
-        self.init_btc = {'OKCoinCNY':500, 'HuobiCNY':500}
-        self.init_cny = {'OKCoinCNY':100, 'HuobiCNY':100}
+        self.init_btc = {'OKCoinCNY':500000000, 'HuobiCNY':500000000}
+        self.init_cny = {'OKCoinCNY':10000000, 'HuobiCNY':10000000}
 
         self.stage0_percent = config.stage0_percent
         self.stage1_percent = config.stage1_percent

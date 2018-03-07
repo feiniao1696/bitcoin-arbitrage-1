@@ -29,8 +29,9 @@ class TraderBot(BasicBot):
         self.trade_wait = config.trade_wait  # in seconds
         self.last_trade = 0
 
-        self.init_btc = {'OKCoinCNY':500, 'HuobiCNY':500}
-        self.init_cny = {'OKCoinCNY':100, 'HuobiCNY':100}
+        # tmp use before can get account
+        self.init_btc = {'OKCoinCNY': 500000000, 'HuobiCNY': 500000000}
+        self.init_cny = {'OKCoinCNY': 10000000, 'HuobiCNY': 10000000}
 
         self.stage0_percent = config.stage0_percent
         self.stage1_percent = config.stage1_percent
@@ -180,6 +181,7 @@ class TraderBot(BasicBot):
         max_volume = self.get_min_tradeable_volume(buyprice,
                                                    self.clients[kask].cny_balance,
                                                    self.clients[kbid].btc_balance)
+        max_volume = 1
         volume = min(volume, max_volume, arbitrage_max_volume)
         if volume < config.min_tx_volume:
             logging.warn("Can't automate this trade, minimum volume transaction"+
@@ -225,6 +227,7 @@ class TraderBot(BasicBot):
         logging.info("Fire:Buy @%s/%0.2f and sell @%s/%0.2f %0.2f BTC" % (kask, buyprice, kbid, sellprice, volume))
 
         # update trend
+        # last_bid_price ？
         if self.last_bid_price < buyprice:
             self.trend_up = True
         else:
@@ -233,7 +236,7 @@ class TraderBot(BasicBot):
         logging.info("trend is %s[%s->%s]", "up, buy then sell" if self.trend_up else "down, sell then buy", self.last_bid_price, buyprice)
         self.last_bid_price = buyprice
 
-        # trade
+        # trade trend_up?
         if self.trend_up:
             result = self.new_order(kask, 'buy', maker_only=False, amount=volume, price=buyprice)
             if not result:
