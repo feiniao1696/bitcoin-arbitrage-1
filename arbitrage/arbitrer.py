@@ -73,6 +73,7 @@ class Arbitrer(object):
             # {'asks': [{'price': 0, 'amount': 0}], 'bids': [{'price': 0, 'amount': 0}]}
             self.depths = self.update_depths()
             # print(self.depths)
+            # todo 又取一次深度，得到买一卖一
             self.tickers()
             self.tick()
             time.sleep(config.refresh_rate)
@@ -86,6 +87,7 @@ class Arbitrer(object):
     def update_depths(self):
         depths = {}
         futures = []
+        # 两个线程更新深度
         for market in self.markets:
             futures.append(self.threadpool.submit(self.__get_market_depth,
                                                   market, depths))
@@ -137,7 +139,7 @@ class Arbitrer(object):
               " Sell: ", weighted_sellprice, "@", kbid, " Volume: ", volume,
               " Expected profit: ", profit, perc2)
 
-        # -- call trader bot
+        # -- call trader bot， 发送交易
         for observer in self.observers:
             # 预期收益，发送成交量，可卖最深档的价格（小于买一/i），便宜卖的交易所，可买最深档的价格（大于卖一/i），买的高交易所，高的比例，发送买价，发送卖价
             # 结合各自余额，更新发送成交量，生成自己的潜在trade，在end处执行交易

@@ -37,6 +37,8 @@ class PrivateHuobiCNY(Market):
         source = "api"  # margin-api
         _type = "buy-limit"  # buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖
         # _price = 0.01  # unit: USDT
+        amount = 0.000001
+        price = 0.000001
         response = HuobiServices.send_order(amount, source, symbol, _type, price=price)
         # {'data': '2008245436', 'status': 'ok'}
         # order_id = order["data"]
@@ -66,6 +68,8 @@ class PrivateHuobiCNY(Market):
         source = "api"  # margin-api
         _type = "sell-limit"  # buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖
         # _price = 0.01  # unit: USDT
+        amount = 0.0000001
+        price = 10000000000
         response = HuobiServices.send_order(amount, source, symbol, _type, price=price)
         # {'data': '2008245436', 'status': 'ok'}
         # order_id = order["data"]
@@ -118,7 +122,14 @@ class PrivateHuobiCNY(Market):
         # to do
         resp['deal_size'] = float(response['data']['field-amount'])
         resp['avg_price'] = float(response['data']['field-cash-amount'])
-        resp['status'] = response['data']['state']  # submitted filled partial-canceled canceled
+        status = response['data']['state']  # submitted filled partial-canceled canceled
+
+        if status == "canceled":
+            resp['status'] = 'CANCELED'
+        elif status == "filled":
+            resp['status'] = 'CLOSE'
+        else:
+            resp['status'] = 'OPEN'
 
         return resp
 

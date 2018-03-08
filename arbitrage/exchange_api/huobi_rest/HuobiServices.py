@@ -5,8 +5,8 @@
 # @Author  : KlausQiu
 # @QQ      : 375235513
 # @github  : https://github.com/KlausQIU
-
-from .Utils import *
+import sys
+from exchange_api.huobi_rest.Utils import *
 
 '''
 Market data API
@@ -426,7 +426,6 @@ if __name__ == '__main__':
     symbol = "btcusdt"
     period = "1min"
     depth_type = "step0"
-    get_depth(symbol, depth_type)
     print(get_symbols())
     print(get_kline(symbol, period, size=150))
     print(get_depth(symbol, depth_type))
@@ -437,6 +436,7 @@ if __name__ == '__main__':
     print(get_accounts())
     print(get_balance(acct_id=None))
 
+    sys.exit(0)
     amount = 0.001
     source = "api"  # margin-api
     _type = "buy-limit"   # buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖

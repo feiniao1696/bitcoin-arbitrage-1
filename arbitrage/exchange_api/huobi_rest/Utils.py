@@ -40,7 +40,26 @@ def http_get_request(url, params, add_to_headers=None):
     if add_to_headers:
         headers.update(add_to_headers)
     postdata = urllib.parse.urlencode(params)
-    response = requests.get(url, postdata, headers=headers, timeout=5) 
+
+    # if "depth" in url:
+    retry_counter = 0
+    while retry_counter < 3:
+        try:
+            retry_counter += 1
+            response = requests.get(url, postdata, headers=headers, timeout=5)
+            break
+        # except requests.exceptions.HTTPError as errh:
+        #     print("Http Error:", errh)
+        except requests.exceptions.ConnectionError as errc:
+            print("ConnectTimeoutError:", errc)
+            # time.sleep(0.01)
+        # except requests.exceptions.Timeout as errt:
+        #     print("Timeout Error:", errt)
+        # except requests.exceptions.RequestException as err:
+        #     print("OOps: Something Else", err)
+
+    # else:
+    #     response = requests.get(url, postdata, headers=headers, timeout=5)
     try:
         
         if response.status_code == 200:
@@ -60,7 +79,17 @@ def http_post_request(url, params, add_to_headers=None):
     if add_to_headers:
         headers.update(add_to_headers)
     postdata = json.dumps(params)
-    response = requests.post(url, postdata, headers=headers, timeout=10)
+
+    retry_counter = 0
+    while retry_counter < 3:
+        try:
+            retry_counter += 1
+            response = requests.post(url, postdata, headers=headers, timeout=10)
+            break
+        except requests.exceptions.ConnectionError as errc:
+            print("ConnectTimeoutError:", errc)
+
+    # response = requests.post(url, postdata, headers=headers, timeout=10)
     try:
         
         if response.status_code == 200:

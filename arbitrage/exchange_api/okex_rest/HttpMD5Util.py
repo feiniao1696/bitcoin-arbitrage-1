@@ -36,5 +36,3 @@ def httpPost(url,resource,params):
      return data
 
 
-        
-     

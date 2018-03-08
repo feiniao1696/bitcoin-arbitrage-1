@@ -24,7 +24,7 @@ class PrivateOkCoinCNY(Market):
             OKCOIN_API_KEY = config.OKCOIN_API_KEY
             OKCOIN_SECRET_TOKEN = config.OKCOIN_SECRET_TOKEN
         # self.market = exchange(OKCOIN_API_URL, OKCOIN_API_KEY, OKCOIN_SECRET_TOKEN, 'okcoin')
-        self.okcoinSpot = OKCoinSpot(OKCOIN_REST_URL, OKCOIN_API_KEY, OKCOIN_SECRET_TOKEN)
+        self.okcoinSpot = OKCoinSpot(config.OKCOIN_REST_URL, OKCOIN_API_KEY, OKCOIN_SECRET_TOKEN)
         self.currency = "CNY"
         self.get_info()
 
@@ -111,8 +111,8 @@ class PrivateOkCoinCNY(Market):
             if response["result"] == True:
                 self.btc_balance = float(response['info']['funds']['free']['btc'])
                 self.cny_balance = float(response['info']['funds']['free']['usdt'])
-                self.btc_frozen =  float(response['info']['funds']['freezed']['btc'])
-                self.cny_frozen =  float(response['info']['funds']['freezed']['usdt'])
+                self.btc_frozen = float(response['info']['funds']['freezed']['btc'])
+                self.cny_frozen = float(response['info']['funds']['freezed']['usdt'])
             else:
                 logging.warn(response)
                 return False

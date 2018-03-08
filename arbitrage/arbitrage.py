@@ -78,10 +78,12 @@ class ArbitrerCLI:
 
     def create_arbitrer(self, args):
         self.arbitrer = Arbitrer()
-        if args.observers:
-            self.arbitrer.init_observers(args.observers.split(","))
+        # 行情
         if args.markets:
             self.arbitrer.init_markets(args.markets.split(","))
+        # 交易
+        if args.observers:
+            self.arbitrer.init_observers(args.observers.split(","))
 
     def list_markets(self):
         logging.debug('list_markets')
@@ -110,6 +112,32 @@ class ArbitrerCLI:
         for market in pmarketsi:
             print(market)
 
+
+def main():
+    cli = ArbitrerCLI()
+    cli.main()
+
+if __name__ == "__main__":
+    main()
+
+
+'''
+2018-03-07 01:00:34,554 [INFO] Buy @OKCoinCNY/10950.00 and sell @HuobiCNY/10951.04 0.04 BTC
+2018-03-07 01:00:34,554 [INFO] 0.1 HuobiCNY btc:10.0 < 50.0,cny:5000 < 10.0,  reverse
+2018-03-07 01:00:34,554 [WARNING] HuobiCNY cny is insufficent
+
+
+response = requests.get(url, postdata, headers=headers, timeout=5)
+        
+  File "/Users/liziheng/anaconda3/lib/python3.6/site-packages/requests/adapters.py", line 496, in send
+    raise ConnectTimeout(e, request=request)
+requests.exceptions.ConnectTimeout: HTTPSConnectionPool(host='api.huobi.pro', port=443): Max retries exceeded with url: /market/depth?symbol=btcusdt&type=step0 (Caused by ConnectTimeoutError(<urllib3.connection.VerifiedHTTPSConnection object at 0x110f74b38>, 'Connection to api.huobi.pro timed out. (connect timeout=5)'))
+    (self.host, self.timeout))
+urllib3.exceptions.ConnectTimeoutError: (<urllib3.connection.VerifiedHTTPSConnection object at 0x10e9b74a8>, 'Connection to api.huobi.pro timed out. (connect timeout=5)')
+
+'''
+
+'''
     def get_broker_balance(self, args):
         last_email_time = 0
         cny_init = config.cny_init
@@ -200,28 +228,4 @@ class ArbitrerCLI:
                     last_email_time = time.time()
                     send_email('Hedge Fund Statistics', broker_msg)
                 time.sleep(20)
-
-
-def main():
-    cli = ArbitrerCLI()
-    cli.main()
-
-if __name__ == "__main__":
-    main()
-
-
-'''
-2018-03-07 01:00:34,554 [INFO] Buy @OKCoinCNY/10950.00 and sell @HuobiCNY/10951.04 0.04 BTC
-2018-03-07 01:00:34,554 [INFO] 0.1 HuobiCNY btc:10.0 < 50.0,cny:5000 < 10.0,  reverse
-2018-03-07 01:00:34,554 [WARNING] HuobiCNY cny is insufficent
-
-
-response = requests.get(url, postdata, headers=headers, timeout=5)
-        
-  File "/Users/liziheng/anaconda3/lib/python3.6/site-packages/requests/adapters.py", line 496, in send
-    raise ConnectTimeout(e, request=request)
-requests.exceptions.ConnectTimeout: HTTPSConnectionPool(host='api.huobi.pro', port=443): Max retries exceeded with url: /market/depth?symbol=btcusdt&type=step0 (Caused by ConnectTimeoutError(<urllib3.connection.VerifiedHTTPSConnection object at 0x110f74b38>, 'Connection to api.huobi.pro timed out. (connect timeout=5)'))
-    (self.host, self.timeout))
-urllib3.exceptions.ConnectTimeoutError: (<urllib3.connection.VerifiedHTTPSConnection object at 0x10e9b74a8>, 'Connection to api.huobi.pro timed out. (connect timeout=5)')
-
 '''
