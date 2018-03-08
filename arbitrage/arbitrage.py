@@ -16,6 +16,7 @@ import time
 import config
 import traceback
 
+
 class ArbitrerCLI:
     def __init__(self):
         self.inject_verbose_info()
