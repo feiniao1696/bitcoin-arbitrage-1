@@ -152,36 +152,13 @@ class PrivateHuobiCNY(Market):
                         response_empty_flag = False
                     else:
                         logging.warn(response)
-                        # return False
-                        # raise TradeException(response["message"])
+                        return False
+                        raise TradeException(response["message"])
             except Exception as ex:
                 logging.warn("get_info failed :%s" % ex)
-                # traceback.print_exc()
-                # return False
-            '''
-            response["data"].keys()
-            Out[7]: dict_keys(['id', 'type', 'state', 'list'])
-            response["data"]["list"]
-            {'balance': '0.279342388400000000', 'currency': 'btc', 'type': 'trade'},
-            {'balance': '0.000000000000000000', 'currency': 'btc', 'type': 'frozen'},   
-                    
-              order_info:
-              {'data': {'account-id': 2103374,
-              'amount': '0.001000000000000000',
-              'canceled-at': 0,
-              'created-at': 1520122184216,
-              'field-amount': '0.0',
-              'field-cash-amount': '0.0',
-              'field-fees': '0.0',
-              'finished-at': 0,
-              'id': 2008245436,
-              'price': '0.010000000000000000',
-              'source': 'api',
-              'state': 'submitted',
-              'symbol': 'btcusdt',
-              'type': 'buy-limit'},
-             'status': 'ok'}
-            '''
+                traceback.print_exc()
+                return False
+
 
 if __name__ == '__main__':
     symbol = "btcusdt"
@@ -205,4 +182,27 @@ if __name__ == '__main__':
     # {'data': '2008245436', 'status': 'ok'}
     order_id = order["data"]
 
-    ''''''
+'''
+response["data"].keys()
+Out[7]: dict_keys(['id', 'type', 'state', 'list'])
+response["data"]["list"]
+{'balance': '0.279342388400000000', 'currency': 'btc', 'type': 'trade'},
+{'balance': '0.000000000000000000', 'currency': 'btc', 'type': 'frozen'},   
+
+  order_info:
+  {'data': {'account-id': 2103374,
+  'amount': '0.001000000000000000',
+  'canceled-at': 0,
+  'created-at': 1520122184216,
+  'field-amount': '0.0',
+  'field-cash-amount': '0.0',
+  'field-fees': '0.0',
+  'finished-at': 0,
+  'id': 2008245436,
+  'price': '0.010000000000000000',
+  'source': 'api',
+  'state': 'submitted',
+  'symbol': 'btcusdt',
+  'type': 'buy-limit'},
+ 'status': 'ok'}
+'''
